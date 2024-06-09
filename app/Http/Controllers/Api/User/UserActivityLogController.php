@@ -16,21 +16,22 @@ class UserActivityLogController extends Controller
         $ipAddress = $request->ip();
 
         $geoData = GeoIP::getLocation($ipAddress);
+
         $agent = new Agent();
 
         $result = UserActivityLog::create([
             'user_agent' => $request->header('User-Agent'),
             'referral_url' => $request->headers->get('referer'),
-            'ip_address' => $request->ip(),
-            'country' => $geoData->ip,
-            'city' => $geoData->city,
-            'state' => $geoData->state_name,
-            'timezone' => $geoData->timezone,
-            'browser' => $agent->browser(),
-            'platform' => $agent->platform(),
-            'device' => $agent->device(),
-            'is_robot' => $agent->robot(),
-            'languages' => $agent->languages(),
+            'ip_address' => $ipAddress,
+            'country' => $geoData->country ?? null,
+            'city' => $geoData->city ?? null,
+            'state' => $geoData->state ?? null,
+            'timezone' => $geoData->timezone ?? null,
+            'browser' => $agent::browser(),
+            'platform' => $agent::platform(),
+            'device' => $agent::device(),
+            'is_robot' => $agent::isRobot(),
+            'languages' => $agent::languages(),
         ]);
 
         if (!$result) {

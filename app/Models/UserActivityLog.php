@@ -23,4 +23,8 @@ class UserActivityLog extends Model
         'device',
         'languages',
     ];
+
+    protected $casts = [
+        'languages' => 'array',
+    ];
 }

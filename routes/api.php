@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HealthCheckController;
 use App\Http\Controllers\Api\User\UserActivityLogController;
 
 /*
@@ -20,5 +21,7 @@ Route::get('/', function () {
             'message' => 'Welcome to my app'
         ]);
 });
+
+Route::get('/health-check', [HealthCheckController::class, 'index'])->name('health-check.index');
 
 Route::post('/user-activity-logs', [UserActivityLogController::class, 'store'])->name('user-activity-logs.store');

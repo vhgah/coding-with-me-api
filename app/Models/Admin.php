@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Admin extends Model
 {
     use HasFactory;
+    use HasApiTokens;
 
     protected $fillable = [
         'email',
@@ -16,5 +18,9 @@ class Admin extends Model
         'status',
         'last_login_at',
         'ip_address',
+    ];
+
+    protected $hidden = [
+        'password',
     ];
 }

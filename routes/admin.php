@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Api\Admin\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HealthCheckController;
 use App\Http\Controllers\Api\User\UserActivityLogController;
@@ -16,13 +17,8 @@ use App\Http\Controllers\Api\User\UserActivityLogController;
 |
 */
 
-Route::get('/', function () {
-    return response()
-        ->json([
-            'message' => 'Welcome to my app'
-        ]);
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+
+Route::middleware('auth:sanctum')->group(function () {
+  Route::apiResource('/users', UserController::class);
 });
-
-Route::get('/health-check', [HealthCheckController::class, 'index'])->name('health-check.index');
-
-Route::post('/user-activity-logs', [UserActivityLogController::class, 'store'])->name('user-activity-logs.store');

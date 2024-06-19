@@ -1,10 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Api\Admin\AuthController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HealthCheckController;
-use App\Http\Controllers\Api\User\UserActivityLogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,4 +20,5 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 Route::middleware('auth:sanctum')->group(function () {
   Route::apiResource('/users', UserController::class);
+  Route::apiResource('/posts', PostController::class);
 });

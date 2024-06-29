@@ -13,6 +13,11 @@ abstract class EloquentRepository
         return $this->query()->whereKey($id)->first();
     }
 
+    public function findWhere(array $options = [])
+    {
+        return $this->query($options)->first();
+    }
+
     public function paginate($args = [], $perPage = 15, $columns = ['*'], $pageParam = 'page')
     {
         return $this->query($args)->paginate($perPage, $columns, $pageParam);

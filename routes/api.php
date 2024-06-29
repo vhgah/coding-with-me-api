@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\HealthCheckController;
 use App\Http\Controllers\Api\User\UserActivityLogController;
 
@@ -25,3 +26,5 @@ Route::get('/', function () {
 Route::get('/health-check', [HealthCheckController::class, 'index'])->name('health-check.index');
 
 Route::post('/user-activity-logs', [UserActivityLogController::class, 'store'])->name('user-activity-logs.store');
+
+Route::get('/posts/{slug}', [PostController::class, 'show'])->name('posts.show');

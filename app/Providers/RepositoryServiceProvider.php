@@ -7,7 +7,8 @@ use Illuminate\Support\ServiceProvider;
 class RepositoryServiceProvider extends ServiceProvider
 {
     protected $repositoryBindings = [
-        \App\RepositoryInterfaces\PostRepositoryInterface::class => \App\Repositories\PostRepository::class
+        \App\RepositoryInterfaces\PostRepositoryInterface::class => \App\Repositories\PostRepository::class,
+        \App\RepositoryInterfaces\FileRepositoryInterface::class => \App\Repositories\FileRepository::class,
     ];
 
     public function register(): void

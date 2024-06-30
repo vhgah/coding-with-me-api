@@ -15,6 +15,7 @@ class CreatePost
     {
         $file = Post::create([
             'title' => $this->data['title'],
+            'slug' => $this->data['slug'],
             'summary' => $this->data['summary'] ?? null,
             'content' => $this->data['content'],
             'status' => $this->data['status'],

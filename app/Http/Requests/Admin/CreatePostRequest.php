@@ -29,6 +29,12 @@ class CreatePostRequest extends FormRequest
                 'max:255',
             ],
 
+            'slug' => [
+                'required',
+                'regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/',
+                'max:255',
+            ],
+
             'summary' => [
                 'sometimes',
                 'max:255',

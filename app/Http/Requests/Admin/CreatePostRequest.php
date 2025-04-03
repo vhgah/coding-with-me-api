@@ -55,8 +55,15 @@ class CreatePostRequest extends FormRequest
             ],
 
             'category_id' => [
-                'nullable'
-            ]
+                'required',
+                'exists:categories,id',
+            ],
+
+            'featured_image' => [
+                'nullable',
+                'sometimes',
+                'url',
+            ],
         ];
     }
 }

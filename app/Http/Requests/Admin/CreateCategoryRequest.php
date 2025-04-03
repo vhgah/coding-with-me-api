@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LoginRequest extends FormRequest
+class CreateCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,14 +22,21 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => [
+            'name' => [
                 'required',
-                'email',
+                'max:255',
             ],
-            'password' => [
+
+            'slug' => [
                 'required',
-            ]
+                'regex:/^\/$|^[a-z0-9]+(?:-[a-z0-9]+)*$/',
+                'max:255',
+            ],
+
+            'position' => [
+                'required',
+                'integer',
+            ],
         ];
     }
-
 }

@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Api\Admin;
+namespace App\Http\Controllers\Auth;
 
 use App\Models\Admin;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\LoginRequest;
+use App\Http\Requests\Auth\AdminLoginRequest;
 
 class AuthController extends Controller
 {
-    public function login(LoginRequest $request)
+    public function login(AdminLoginRequest $request)
     {
         $validatedData = $request->validated();
 

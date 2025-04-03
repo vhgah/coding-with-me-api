@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Enums\PostStatusEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Post>
@@ -18,11 +19,13 @@ class PostFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => fake()->sentence,
+            'title' => $title = fake()->sentence,
+            'slug' => Str::slug($title),
             'content' => fake()->paragraphs(3, true),
             'summary' => fake()->text(200),
             'status' => PostStatusEnum::ACTIVE,
             'published_at' => now()->subDay(),
+            'admin_id' => 1,
         ];
     }
 }

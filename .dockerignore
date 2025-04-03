@@ -1,7 +1,0 @@
-.git
-node_modules
-vendor
-.env
-.env.*
-docker-compose.yml
-.DS_Store

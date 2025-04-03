@@ -9,6 +9,7 @@ class RepositoryServiceProvider extends ServiceProvider
     protected $repositoryBindings = [
         \App\RepositoryInterfaces\PostRepositoryInterface::class => \App\Repositories\PostRepository::class,
         \App\RepositoryInterfaces\FileRepositoryInterface::class => \App\Repositories\FileRepository::class,
+        \App\RepositoryInterfaces\CategoryRepositoryInterface::class => \App\Repositories\CategoryRepository::class,
     ];
 
     public function register(): void

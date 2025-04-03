@@ -1,10 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\FileController;
-use App\Http\Controllers\Api\Admin\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,11 +17,15 @@ use App\Http\Controllers\Api\Admin\AuthController;
 |
 */
 
-Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::prefix('admin')
+  ->name('admin.')
+  ->middleware('auth:sanctum')
+  ->group(function () {
+    Route::apiResource('/users', UserController::class);
+    Route::apiResource('/posts', PostController::class);
+    Route::put('posts/{post}/status', [PostController::class, 'updateStatus']);
 
-Route::middleware('auth:sanctum')->group(function () {
-  Route::apiResource('/users', UserController::class);
-  Route::apiResource('/posts', PostController::class);
+    Route::apiResource('/categories', CategoryController::class);
 
-  Route::apiResource('/files', FileController::class);
-});
+    Route::apiResource('/files', FileController::class);
+  });

@@ -1,9 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PostController;
-use App\Http\Controllers\HealthCheckController;
-use App\Http\Controllers\Api\User\UserActivityLogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,15 +12,7 @@ use App\Http\Controllers\Api\User\UserActivityLogController;
 |
 */
 
-Route::get('/', function () {
-    return response()
-        ->json([
-            'message' => 'Welcome to my app'
-        ]);
-});
-
-Route::get('/health-check', [HealthCheckController::class, 'index'])->name('health-check.index');
-
-Route::post('/user-activity-logs', [UserActivityLogController::class, 'store'])->name('user-activity-logs.store');
-
-Route::get('/posts/{slug}', [PostController::class, 'show'])->name('posts.show');
+require __DIR__.'/admin.php';
+require __DIR__.'/auth.php';
+require __DIR__.'/user.php';
+require __DIR__.'/public.php';

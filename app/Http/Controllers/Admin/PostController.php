@@ -7,6 +7,7 @@ use App\Actions\CreatePost;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CreatePostRequest;
+use App\Http\Requests\Admin\UpdatePostStatusRequest;
 use App\RepositoryInterfaces\PostRepositoryInterface;
 
 class PostController extends Controller
@@ -50,17 +51,12 @@ class PostController extends Controller
         );
     }
 
-    public function show($id)
+    public function show(Post $post)
     {
-        $post = $this->postRepository->findWhere([
-            'id' => $id,
-            'admin_id' => auth()->user()->id,
-        ]);
-
-        if (!$post) {
+        if ($post->admin_id !== auth()->user()->id) {
             return response()->json([
-                'message' => 'Post not found'
-            ], 404);
+                'message' => 'You do not have permission to update this post'
+            ], 403);
         }
 
         return response()->json(
@@ -68,22 +64,43 @@ class PostController extends Controller
         );
     }
 
-    public function update(CreatePostRequest $request, $id)
+    public function update(CreatePostRequest $request, Post $post)
+    {
+        if ($post->admin_id !== auth()->user()->id) {
+            return response()->json([
+                'message' => 'You do not have permission to update this post'
+            ], 403);
+        }
+
+        $data = $request->validated();
+
+        $post->update($data);
+
+        return response()->json(
+            $this->getResource($post)
+        );
+    }
+
+    public function destroy(Post $post)
+    {
+        if ($post->admin_id !== auth()->user()->id) {
+            return response()->json([
+                'message' => 'You do not have permission to delete this post'
+            ], 403);
+        }
+
+        $post->delete();
+        
+        return response()->json(null, 204);
+    }
+
+    public function updateStatus(UpdatePostStatusRequest $request, Post $post)
     {
         $data = $request->validated();
 
-        $post = $this->postRepository->findWhere([
-            'id' => $id,
-            'admin_id' => auth()->user()->id,
+        $post->update([
+            'status' => $data['status']
         ]);
-
-        if (!$post) {
-            return response()->json([
-                'message' => 'Post not found'
-            ], 404);
-        }
-
-        $post->update($data);
 
         return response()->json(
             $this->getResource($post)
@@ -95,12 +112,15 @@ class PostController extends Controller
         return [
             'id' => $post->id,
             'title' => $post->title,
+            'featured_image' => $post->featured_image,
             'summary' => $post->summary,
             'content' => $post->content,
             'status' => $post->status,
+            'category_id' => $post->category_id,
             'created_at' => $post->created_at,
             'updated_at' => $post->updated_at,
             'published_at' => $post->published_at,
+            'is_active' => $post->isActive(),
         ];
     }
 }

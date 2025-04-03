@@ -20,7 +20,9 @@ class CreatePost
             'content' => $this->data['content'],
             'status' => $this->data['status'],
             'published_at' => $this->data['published_at'] ?? null,
-            'admin_id' => $this->data['admin_id']
+            'admin_id' => $this->data['admin_id'],
+            'category_id' => $this->data['category_id'],
+            'featured_image' => $this->data['featured_image'] ?? null,
         ]);
 
         return $file;

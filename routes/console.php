@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Post;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 
@@ -13,6 +14,11 @@ use Illuminate\Support\Facades\Artisan;
 | simple approach to interacting with each command's IO methods.
 |
 */
+
+Artisan::command('debug', function () {
+    $post = Post::where('id' , '>', 3)->delete();
+    dd($post);
+})->purpose('Debugging purpose');
 
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());

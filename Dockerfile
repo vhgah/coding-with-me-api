@@ -17,6 +17,8 @@ COPY . .
 
 RUN chown -R www-data:www-data /var/www/html
 
+RUN composer install --no-dev --optimize-autoloader
+
 EXPOSE 9000
 
 CMD ["php-fpm"]

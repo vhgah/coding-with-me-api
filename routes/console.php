@@ -16,8 +16,7 @@ use Illuminate\Support\Facades\Artisan;
 */
 
 Artisan::command('debug', function () {
-    $post = Post::where('id' , '>', 3)->delete();
-    dd($post);
+    Log::info('Debugging command executed');
 })->purpose('Debugging purpose');
 
 Artisan::command('inspire', function () {

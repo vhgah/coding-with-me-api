@@ -1,0 +1,7 @@
+vendor
+
+/bootstrap/cache/*.php
+
+.dockerignore
+
+Dockerfile.*

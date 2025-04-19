@@ -50,6 +50,17 @@ class PostController extends Controller
         return response()->json([
             'data' => [
                 'title' => $post->title,
+                'slug' => $post->slug,
+                'summary' => $post->summary,
+                'featured_image' => $post->featured_image,
+                'link' => sprintf('/%s', $post->slug),
+                'author' => [
+                    'name' => $post->author->username,
+                ],
+                'category' => [
+                    'name' => $post->category->name,
+                    'link' => sprintf('/category/%s', $post->category->slug),
+                ],
                 'content' => $post->content,
                 'published_at' => $post->formatted_published_at,
             ]

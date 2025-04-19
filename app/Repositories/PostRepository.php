@@ -23,6 +23,11 @@ class PostRepository extends EloquentRepository implements PostRepositoryInterfa
             ->when(!empty($options['category_id']), function ($query) use ($options) {
                 return $query->where('category_id', $options['category_id']);
             })
+            ->when(!empty($options['category_slug']), function ($query) use ($options) {
+                return $query->whereHas('category', function ($query) use ($options) {
+                    return $query->where('slug', $options['category_slug']);
+                });
+            })
             ->when(!empty($options['keyword']), function ($query) use ($options) {
                 return $query->where('title', 'like', '%' . $options['keyword'] . '%');
             })

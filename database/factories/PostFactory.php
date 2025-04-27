@@ -26,6 +26,7 @@ class PostFactory extends Factory
             'status' => PostStatusEnum::ACTIVE,
             'published_at' => now()->subDay(),
             'admin_id' => 1,
+            'category_id' => 1,
         ];
     }
 }

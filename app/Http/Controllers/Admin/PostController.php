@@ -112,6 +112,7 @@ class PostController extends Controller
         return [
             'id' => $post->id,
             'title' => $post->title,
+            'slug' => $post->slug,
             'featured_image' => $post->featured_image,
             'summary' => $post->summary,
             'content' => $post->content,

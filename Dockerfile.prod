@@ -1,4 +1,4 @@
-# ===== Stage 1: Composer Dependencies =====
+# Stage 1: Composer dependencies
 FROM composer:2.7.2 AS composer
 
 WORKDIR /app
@@ -7,7 +7,14 @@ COPY composer.json composer.lock ./
 
 RUN composer install --no-dev --no-scripts
 
-# ===== Stage 2: PHP Application =====
+# Stage 2: PHP app build
+FROM php:8.2-fpm AS app
+
+WORKDIR /var/www/html
+
+COPY . .
+
+# Stage 3: Final image
 FROM php:8.2-fpm
 
 # Install necessary PHP extensions
@@ -21,18 +28,12 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd zip pdo pdo_mysql
 
-# Set working directory
 WORKDIR /var/www/html
 
-# Copy source code
-COPY . .
+COPY --from=app /var/www/html ./
+COPY --from=composer /app/vendor ./vendor
 
-# Copy vendor from composer stage
-COPY --from=composer /app/vendor /var/www/html/vendor
-
-# Set proper permissions
 RUN chown -R www-data:www-data /var/www/html
 
-# Expose port 9000 and start PHP-FPM
 EXPOSE 9000
 CMD ["php-fpm"]
